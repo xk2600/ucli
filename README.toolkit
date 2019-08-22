@@ -1,0 +1,33 @@
+=======
+ FILES
+=======
+README      - this document
+clish.xsd   - The current XML schema definition including comments
+              describing the use of all the elements and attributes.
+clish.exe   - Application to map CLI actions to native cygwin shell script.
+demo        - Script to launch clish.exe to use the xml-files directory.
+
+=======
+ USAGE
+=======
+Either set the CLISH_PATH envrionment variable to a semicolon separated path
+of directories in which the XML definitions can be found. Then launch clish.exe
+or tclish.exe.
+
+("demo" is a shell script to do this for the "xml-files" subdirectory)
+
+$ ./clish -help
+./clish [-help] [scriptname]
+  -help      : display this usage
+  scriptname : run the commands in the specified file
+
+VERSION 0.7.0
+
+ENVIRONMENT
+  CLISH_PATH : Set to a semicolon separated list of directories
+               which should be searched for XML definition files.
+               Current Value: './xml-files'
+               If undefined then '/etc/clish;~/.clish' will be used.
+
+
+

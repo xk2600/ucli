@@ -1,0 +1,14 @@
+BEGIN: Testing 'lub_fifo'.
+001     :        *** Sequence 'lub_fifo_init()' begins ***
+001-0000: [pass] check FIFO is empty
+002     :        *** Sequence 'insert several nodes' begins ***
+002-0000: [pass] check FIFO is not empty
+003     :        *** Sequence 'lub_fifo_pull() remove the nodes' begins ***
+003-0000: [pass] (1==1) check node
+003-0001: [pass] (2==2) check node
+003-0002: [pass] (3==3) check node
+003-0003: [pass] check FIFO is not empty
+004     :        *** Sequence 'lub_fifo_fini()' begins ***
+004     :        ------------------------------------------------------------
+END: Test 'lub_fifo' PASSED (6 tests).
+

@@ -1,0 +1,18 @@
+/**
+\page _issues_page Issues
+
+\todo
+
+- the heap unittest current has 10 failures
+
+- no unittests for the dblockpool component yet...
+
+- lub_heap_destroy() method should be provided which will de-register any allocated blocks from the
+  leak detection trees.
+
+- update leak detection to scan non-monitored allocated memory blocks, for references. This requires
+  the ability to iterate all the heaps in the system.
+
+\section _nice Nice to have
+
+*/

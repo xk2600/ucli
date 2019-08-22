@@ -1,0 +1,30 @@
+project
+    : build-dir
+        BUILD
+    : requirements
+        <include>.
+        <define>PACKAGE_VERSION='\"0.7.4\"'
+    ;
+use-project /lub
+    : ./lub
+    ;
+alias /lubheap
+    : ./lubheap
+    ;
+use-project /root
+    : .
+    ;
+alias test
+    :
+        ./test
+    ;
+install DIST
+    : 
+        test
+    :
+        <variant>debug:<location>DIST/debug
+        <variant>release:<location>DIST/release
+        <install-dependencies>on
+        <install-type>EXE
+        <install-type>LIB
+    ;
