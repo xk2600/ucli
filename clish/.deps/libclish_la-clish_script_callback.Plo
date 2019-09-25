@@ -1,0 +1,74 @@
+clish/libclish_la-clish_script_callback.lo: clish/clish_script_callback.c \
+  /usr/include/stdio.h /usr/include/sys/cdefs.h /usr/include/sys/_null.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/x86/_types.h /usr/include/machine/_limits.h \
+  /usr/include/x86/_limits.h /usr/include/stdlib.h clish/private.h \
+  lub/c_decl.h clish/shell.h /usr/include/pthread.h \
+  /usr/include/sys/_pthreadtypes.h /usr/include/sys/_sigset.h \
+  /usr/include/sched.h /usr/include/sys/_timespec.h /usr/include/time.h \
+  /usr/include/sys/timespec.h /usr/include/xlocale/_time.h lub/types.h \
+  lub/argv.h /usr/include/stddef.h tinyrl/tinyrl.h tinyrl/history.h \
+  clish/view.h clish/command.h lub/bintree.h clish/pargv.h clish/ptype.h \
+  clish/param.h
+
+/usr/include/stdio.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_null.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/x86/_types.h:
+
+/usr/include/machine/_limits.h:
+
+/usr/include/x86/_limits.h:
+
+/usr/include/stdlib.h:
+
+clish/private.h:
+
+lub/c_decl.h:
+
+clish/shell.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sys/_pthreadtypes.h:
+
+/usr/include/sys/_sigset.h:
+
+/usr/include/sched.h:
+
+/usr/include/sys/_timespec.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/timespec.h:
+
+/usr/include/xlocale/_time.h:
+
+lub/types.h:
+
+lub/argv.h:
+
+/usr/include/stddef.h:
+
+tinyrl/tinyrl.h:
+
+tinyrl/history.h:
+
+clish/view.h:
+
+clish/command.h:
+
+lub/bintree.h:
+
+clish/pargv.h:
+
+clish/ptype.h:
+
+clish/param.h:

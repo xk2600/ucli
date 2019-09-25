@@ -1,0 +1,70 @@
+tinyxml/libtinyxml_la-tinyxmlerror.lo: tinyxml/tinyxmlerror.cpp \
+  tinyxml/tinyxml.h /usr/include/c++/v1/ctype.h \
+  /usr/include/c++/v1/__config /usr/include/sys/endian.h \
+  /usr/include/sys/cdefs.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/x86/_types.h \
+  /usr/include/machine/_limits.h /usr/include/x86/_limits.h \
+  /usr/include/machine/endian.h /usr/include/x86/endian.h \
+  /usr/include/ctype.h /usr/include/_ctype.h /usr/include/runetype.h \
+  /usr/include/xlocale/_ctype.h /usr/include/c++/v1/stdio.h \
+  /usr/include/stdio.h /usr/include/sys/_null.h \
+  /usr/include/c++/v1/stdlib.h /usr/include/stdlib.h \
+  /usr/include/c++/v1/string.h /usr/include/string.h \
+  /usr/include/strings.h /usr/include/xlocale/_strings.h \
+  /usr/include/xlocale/_string.h /usr/include/assert.h tinyxml/tinystr.h
+
+tinyxml/tinyxml.h:
+
+/usr/include/c++/v1/ctype.h:
+
+/usr/include/c++/v1/__config:
+
+/usr/include/sys/endian.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/x86/_types.h:
+
+/usr/include/machine/_limits.h:
+
+/usr/include/x86/_limits.h:
+
+/usr/include/machine/endian.h:
+
+/usr/include/x86/endian.h:
+
+/usr/include/ctype.h:
+
+/usr/include/_ctype.h:
+
+/usr/include/runetype.h:
+
+/usr/include/xlocale/_ctype.h:
+
+/usr/include/c++/v1/stdio.h:
+
+/usr/include/stdio.h:
+
+/usr/include/sys/_null.h:
+
+/usr/include/c++/v1/stdlib.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/c++/v1/string.h:
+
+/usr/include/string.h:
+
+/usr/include/strings.h:
+
+/usr/include/xlocale/_strings.h:
+
+/usr/include/xlocale/_string.h:
+
+/usr/include/assert.h:
+
+tinyxml/tinystr.h:

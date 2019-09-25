@@ -159,7 +159,7 @@ tinyrl_vt100_eof(const tinyrl_vt100_t *this)
 unsigned
 tinyrl_vt100__get_width(const tinyrl_vt100_t *this)
 {
-    this=this;
+    /* this=this; */
     /* hard code until we suss out how to do it properly */
     return 80;
 }
@@ -177,7 +177,7 @@ static void
 tinyrl_vt100_fini(tinyrl_vt100_t *this)
 {
     /* nothing to do yet... */
-    this=this;
+    /* this=this; */
 }
 /*-------------------------------------------------------- */
 tinyrl_vt100_t *

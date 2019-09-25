@@ -1,0 +1,30 @@
+lub/ctype/ctype_tolower.lo: lub/ctype/ctype_tolower.c lub/ctype.h \
+  lub/types.h lub/c_decl.h /usr/include/ctype.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/x86/_types.h /usr/include/machine/_limits.h \
+  /usr/include/x86/_limits.h /usr/include/_ctype.h \
+  /usr/include/runetype.h
+
+lub/ctype.h:
+
+lub/types.h:
+
+lub/c_decl.h:
+
+/usr/include/ctype.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/x86/_types.h:
+
+/usr/include/machine/_limits.h:
+
+/usr/include/x86/_limits.h:
+
+/usr/include/_ctype.h:
+
+/usr/include/runetype.h:

@@ -33,7 +33,11 @@ tty_set_raw_mode(tinyrl_t *this)
         status = tcgetattr(fd,&new_termios);
         assert(-1 != status);
         new_termios.c_iflag     = 0;
+#ifdef ONLCR
         new_termios.c_oflag     = OPOST | ONLCR;
+#else
+        new_termios.c_oflag     = OPOST;
+#endif
         new_termios.c_lflag     = 0;
         new_termios.c_cc[VMIN]  = 1;
         new_termios.c_cc[VTIME] = 0;
@@ -101,7 +105,7 @@ tinyrl_key_interrupt(tinyrl_t *this,
     tinyrl_delete_text(this,0,this->end);
     this->done = BOOL_TRUE;
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     
     return BOOL_TRUE;
 }
@@ -113,7 +117,7 @@ tinyrl_key_start_of_line(tinyrl_t *this,
     /* set the insertion point to the start of the line */
     this->point = 0;
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return BOOL_TRUE;
 }
 /*-------------------------------------------------------- */
@@ -124,7 +128,7 @@ tinyrl_key_end_of_line(tinyrl_t *this,
     /* set the insertion point to the end of the line */
     this->point = this->end;
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return BOOL_TRUE;
 }
 /*-------------------------------------------------------- */
@@ -141,7 +145,7 @@ tinyrl_key_kill(tinyrl_t *this,
     /* delete the text to the end of the line */
     tinyrl_delete_text(this,this->point,this->end);
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return BOOL_TRUE;
 }
 /*-------------------------------------------------------- */
@@ -156,7 +160,7 @@ tinyrl_key_yank(tinyrl_t *this,
         result = tinyrl_insert_text(this,this->kill_string);
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -167,7 +171,7 @@ tinyrl_key_crlf(tinyrl_t *this,
     tinyrl_crlf(this);
     this->done = BOOL_TRUE;
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return BOOL_TRUE;
 }
 /*-------------------------------------------------------- */
@@ -198,7 +202,7 @@ tinyrl_key_up(tinyrl_t *this,
        result = BOOL_TRUE;
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -228,7 +232,7 @@ tinyrl_key_down(tinyrl_t *this,
         result = BOOL_TRUE;
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -243,7 +247,7 @@ tinyrl_key_left(tinyrl_t *this,
         result = BOOL_TRUE;
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -258,7 +262,7 @@ tinyrl_key_right(tinyrl_t *this,
         result = BOOL_TRUE;
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -274,7 +278,7 @@ tinyrl_key_backspace(tinyrl_t *this,
         result = BOOL_TRUE;
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -289,7 +293,7 @@ tinyrl_key_delete(tinyrl_t *this,
         result = BOOL_TRUE;
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -302,8 +306,8 @@ tinyrl_key_clear_screen(tinyrl_t *this,
     tinyrl_reset_line_state(this);
     
     /* keep the compiler happy */
-    key = key;
-    this = this;
+ /* key = key; */
+ /* this = this; */
     return BOOL_TRUE;
 }
 /*-------------------------------------------------------- */
@@ -315,8 +319,8 @@ tinyrl_key_erase_line(tinyrl_t *this, int key)
     this->point = 0;
 
     /* keep the compiler happy */
-    key = key;
-    this = this;
+ /* key = key; */
+ /* this = this; */
 
     return BOOL_TRUE;
 }/*-------------------------------------------------------- */
@@ -373,7 +377,7 @@ tinyrl_key_tab(tinyrl_t *this,
         }
     }
     /* keep the compiler happy */
-    key = key;
+ /* key = key; */
     return result;
 }
 /*-------------------------------------------------------- */
@@ -1158,7 +1162,7 @@ tinyrl_replace_line(tinyrl_t   *this,
     size_t new_len = strlen(text);
     
     /* ignored for now */
-    clear_undo = clear_undo;
+    /* clear_undo = clear_undo; */
     
     /* ensure there is sufficient space */
     if (BOOL_TRUE == tinyrl_extend_line_buffer(this,new_len))

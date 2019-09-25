@@ -37,7 +37,7 @@ if test "${exec_prefix}" = "NONE"; then
     exec_prefix=$prefix
 fi
 # libdir must be a fully qualified path (not ${exec_prefix}/lib)
-eval libdir="$libdir"
+eval libdir="${prefix}/lib"
 
 ################################
 # Deal with debugging options

@@ -74,8 +74,8 @@ static int
 compareright(const void *clientnode,
              const void *clientkey)
 {
-        clientnode = clientnode;
-        clientkey = clientkey;
+     /* clientnode = clientnode; */
+     /* clientkey = clientkey; */
         return -1;
 }
 /*--------------------------------------------------------- */

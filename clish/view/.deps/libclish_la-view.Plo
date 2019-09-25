@@ -1,0 +1,93 @@
+clish/view/libclish_la-view.lo: clish/view/view.c clish/view/private.h \
+  clish/view.h clish/command.h lub/bintree.h /usr/include/stddef.h \
+  /usr/include/sys/cdefs.h /usr/include/sys/_null.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/x86/_types.h /usr/include/machine/_limits.h \
+  /usr/include/x86/_limits.h clish/pargv.h clish/ptype.h lub/types.h \
+  clish/param.h clish/variable.h clish/shell.h /usr/include/stdio.h \
+  /usr/include/pthread.h /usr/include/sys/_pthreadtypes.h \
+  /usr/include/sys/_sigset.h /usr/include/sched.h \
+  /usr/include/sys/_timespec.h /usr/include/time.h \
+  /usr/include/sys/timespec.h /usr/include/xlocale/_time.h lub/c_decl.h \
+  lub/argv.h tinyrl/tinyrl.h tinyrl/history.h lub/string.h lub/ctype.h \
+  /usr/include/assert.h /usr/include/stdlib.h /usr/include/string.h \
+  /usr/include/strings.h /usr/include/xlocale/_strings.h \
+  /usr/include/xlocale/_string.h
+
+clish/view/private.h:
+
+clish/view.h:
+
+clish/command.h:
+
+lub/bintree.h:
+
+/usr/include/stddef.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_null.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/x86/_types.h:
+
+/usr/include/machine/_limits.h:
+
+/usr/include/x86/_limits.h:
+
+clish/pargv.h:
+
+clish/ptype.h:
+
+lub/types.h:
+
+clish/param.h:
+
+clish/variable.h:
+
+clish/shell.h:
+
+/usr/include/stdio.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sys/_pthreadtypes.h:
+
+/usr/include/sys/_sigset.h:
+
+/usr/include/sched.h:
+
+/usr/include/sys/_timespec.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/timespec.h:
+
+/usr/include/xlocale/_time.h:
+
+lub/c_decl.h:
+
+lub/argv.h:
+
+tinyrl/tinyrl.h:
+
+tinyrl/history.h:
+
+lub/string.h:
+
+lub/ctype.h:
+
+/usr/include/assert.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/string.h:
+
+/usr/include/strings.h:
+
+/usr/include/xlocale/_strings.h:
+
+/usr/include/xlocale/_string.h:

@@ -1,0 +1,44 @@
+test/bintree.o: test/bintree.c /usr/include/string.h \
+  /usr/include/sys/cdefs.h /usr/include/sys/_null.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/x86/_types.h /usr/include/machine/_limits.h \
+  /usr/include/x86/_limits.h /usr/include/stdio.h test/bintree.h \
+  lub/bintree.h /usr/include/stddef.h lub/blockpool.h lub/test.h \
+  /usr/include/stdarg.h /usr/include/x86/stdarg.h \
+  /usr/include/sys/_stdarg.h lub/types.h
+
+/usr/include/string.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_null.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/x86/_types.h:
+
+/usr/include/machine/_limits.h:
+
+/usr/include/x86/_limits.h:
+
+/usr/include/stdio.h:
+
+test/bintree.h:
+
+lub/bintree.h:
+
+/usr/include/stddef.h:
+
+lub/blockpool.h:
+
+lub/test.h:
+
+/usr/include/stdarg.h:
+
+/usr/include/x86/stdarg.h:
+
+/usr/include/sys/_stdarg.h:
+
+lub/types.h:
