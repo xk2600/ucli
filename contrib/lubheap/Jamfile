@@ -1,5 +1,0 @@
-lib lubheap
-    :
-        /lub//lub_heap
-        [ glob posix/*.c ]
-    ;

@@ -40,39 +40,42 @@ typedef enum {
 
 /* iterate around commands */
 typedef struct {
- const clish_command_t *last_cmd_local;
- const clish_command_t *last_cmd_global;
+ const clish_command_t     *last_cmd_local;
+ const clish_command_t     *last_cmd_global;
 } clish_shell_iterator_t;
 
 /* this is used to maintain a stack of file handles */
 typedef struct clish_shell_file_s clish_shell_file_t;
 struct clish_shell_file_s {
- clish_shell_file_t *next;
- FILE *file;
- bool_t stop_on_error; /* stop on error for file input */
+ clish_shell_file_t        *next;
+ FILE                      *file;
+ bool_t                     stop_on_error;  /* stop on error for file input */
 };
 
 struct clish_shell_s {
- lub_bintree_t view_tree; /* Maintain a tree of views */
- lub_bintree_t ptype_tree; /* Maintain a tree of ptypes */
- const clish_shell_hooks_t *client_hooks;/* Client callback hooks */
- void *client_cookie; /* Client callback cookie */
- clish_view_t *global; /* Reference to the global view. */
- clish_view_t *view; /* Reference to the current view.*/
- clish_command_t *startup; /* This is the startup command */
- clish_shell_iterator_t iter; /* used for iterating commands */
- shell_state_t state; /* The current state */
- char *overview; /* Overview text for this shell. */
- char *viewid; /* The current view ID string */
- tinyrl_t *tinyrl; /* Tiny readline instance */
- clish_shell_file_t *current_file; /* file currently in use for input */
+ lub_bintree_t              view_tree;      /* Maintain a tree of views */
+ lub_bintree_t              ptype_tree;     /* Maintain a tree of ptypes */
+ const clish_shell_hooks_t *client_hooks;   /* Client callback hooks */
+ void                      *client_cookie;  /* Client callback cookie */
+ clish_view_t              *global;         /* Reference to the global view. */
+ clish_view_t              *view;           /* Reference to the current view.*/
+ clish_command_t           *startup;        /* This is the startup command */
+ clish_shell_iterator_t     iter;           /* used for iterating commands */
+ shell_state_t              state;          /* The current state */
+ char                      *overview;       /* Overview text for this shell. */
+ char                      *viewid;         /* The current view ID string */
+ tinyrl_t                  *tinyrl;         /* Tiny readline instance */
+ clish_shell_file_t        *current_file;   /* file currently in use for input */
 };
 
 /* Initialise a command iterator structure */
 void clish_shell_iterator_init(clish_shell_iterator_t *iter);
 
 /* get the next command which is an extension of the specified line */
-const clish_command_t * clish_shell_find_next_completion(const clish_shell_t *instance, const char *line, clish_shell_iterator_t *iter);
+const clish_command_t *     clish_shell_find_next_completion(
+                              const clish_shell_t    *instance, 
+                              const char             *line, 
+                              clish_shell_iterator_t *iter);
 
 /* Push the specified file handle on to the stack of file handles for this 
  * shell. The specified file will become the source of commands, until it is 
@@ -82,7 +85,10 @@ const clish_command_t * clish_shell_find_next_completion(const clish_shell_t *in
  *
  *      BOOL_TRUE - the file was successfully associated with the shell.
  *      BOOL_FALSE - there was insufficient resource to associate this file.  */
-bool_t clish_shell_push_file(clish_shell_t *instance, FILE *file, bool_t stop_on_error);
+bool_t                      clish_shell_push_file(
+                              clish_shell_t          *instance, 
+                              FILE                   *file, 
+                              bool_t                  stop_on_error);
 
 /* Pop the current file handle from the stack of file handles, shutting the 
  * file down and freeing any associated memory. The next file handle in the 
@@ -94,18 +100,57 @@ bool_t clish_shell_push_file(clish_shell_t *instance, FILE *file, bool_t stop_on
  *      BOOL_FALSE - there is only one handle on the stack which cannot be replaced. */
 bool_t clish_shell_pop_file(clish_shell_t *instance);
 
-clish_view_t *          clish_shell_find_view(clish_shell_t *instance, const char *name);
-void                    clish_shell_insert_view(clish_shell_t *instance, clish_view_t *view);
-clish_pargv_status_t    clish_shell_parse(const clish_shell_t *instance, const char *line, const clish_command_t **cmd, clish_pargv_t **pargv);
-char *                  clish_shell_word_generator(clish_shell_t *instance, const char *line, unsigned offset, unsigned state);
-const clish_command_t * clish_shell_resolve_command(const clish_shell_t *instance, const char *line);
-const clish_command_t * clish_shell_resolve_prefix(const clish_shell_t *instance, const char *line);
-const clish_command_t * clish_shell_getfirst_command(clish_shell_t *instance, const char *line);
-const clish_command_t * clish_shell_getnext_command(clish_shell_t *instance, const char *line);
-void                    clish_shell_insert_ptype(clish_shell_t *instance, clish_ptype_t *ptype);
-void                    clish_shell_tinyrl_history(clish_shell_t *instance, unsigned int *limit);
-tinyrl_t *              clish_shell_tinyrl_new(FILE *instream, FILE *outstream, unsigned stifle);
-void                    clish_shell_tinyrl_delete(tinyrl_t *instance);
+      clish_view_t *        clish_shell_find_view(
+                              clish_shell_t          *instance, 
+                              const char             *name);
+
+void                        clish_shell_insert_view(
+                              clish_shell_t          *instance, 
+                              clish_view_t           *view);
+
+      clish_pargv_status_t  clish_shell_parse(
+                              const clish_shell_t    *instance, 
+                              const char             *line, 
+                              const clish_command_t **cmd,
+                              clish_pargv_t         **pargv);
+
+char *                      clish_shell_word_generator(
+                              clish_shell_t          *instance, 
+                              const char             *line, 
+                              unsigned int            offset, 
+                              unsigned int            state);
+
+const clish_command_t *     clish_shell_resolve_command(
+                              const clish_shell_t    *instance, 
+                              const char             *line);
+
+const clish_command_t *     clish_shell_resolve_prefix(
+                              const clish_shell_t    *instance,
+                              const char             *line);
+
+const clish_command_t *     clish_shell_getfirst_command(
+                              clish_shell_t          *instance,
+                              const char             *line);
+
+const clish_command_t *     clish_shell_getnext_command(
+                              clish_shell_t          *instance,
+                              const char             *line);
+
+void                        clish_shell_insert_ptype(
+                              clish_shell_t          *instance,
+                              clish_ptype_t          *ptype);
+
+void                        clish_shell_tinyrl_history(
+                              clish_shell_t          *instance,
+                              unsigned int           *limit);
+
+tinyrl_t *                  clish_shell_tinyrl_new(
+                              FILE                   *instream,
+                              FILE                   *outstream,
+                              unsigned int            stifle);
+
+void                        clish_shell_tinyrl_delete(
+                              tinyrl_t               *instance);
 
 
 
@@ -114,29 +159,27 @@ void                    clish_shell_tinyrl_delete(tinyrl_t *instance);
 /* shell__get_client_cookie.c */
 
 void *
-clish_shell__get_client_cookie(const clish_shell_t *this)
-{
+clish_shell__get_client_cookie(const clish_shell_t *this) {
+
 	return this->client_cookie;
 }
 /* shell__get_tinyrl.c */
 
 tinyrl_t *
-clish_shell__get_tinyrl(const clish_shell_t *this)
-{
+clish_shell__get_tinyrl(const clish_shell_t *this) {
 	return this->tinyrl;
 }
 /* shell__get_view.c */
 
 const clish_view_t *
-clish_shell__get_view(const clish_shell_t *this)
-{
+clish_shell__get_view(const clish_shell_t *this) {
+
 	return this->view;
 }
 /* shell__get_viewid.c */
 
 const char *
-clish_shell__get_viewid(const clish_shell_t *this)
-{
+clish_shell__get_viewid(const clish_shell_t *this) {
 	return this->viewid;
 }
 
@@ -146,8 +189,8 @@ clish_shell__get_viewid(const clish_shell_t *this)
 /** word_generator **/
 
 void
-clish_shell_iterator_init(clish_shell_iterator_t *iter)
-{
+clish_shell_iterator_init(clish_shell_iterator_t *iter) {
+
     iter->last_cmd_local  = NULL;
     iter->last_cmd_global = NULL;
 }
@@ -155,8 +198,8 @@ clish_shell_iterator_init(clish_shell_iterator_t *iter)
 const clish_command_t *
 clish_shell_find_next_completion(const clish_shell_t    *this,
                                  const char             *line,
-                                 clish_shell_iterator_t *iter)
-{
+                                 clish_shell_iterator_t *iter) {
+
     const clish_command_t *result=NULL,*cmd1,*cmd2;
     int                    diff;
 
@@ -170,14 +213,12 @@ clish_shell_find_next_completion(const clish_shell_t    *this,
                                            line);
     /* compare the two results */
     diff = clish_command_diff(cmd1,cmd2);
-    if(diff > 0)
-    {
+    if(diff > 0) {
         result = iter->last_cmd_global = cmd2;
-    }
-    else
-    {
-        if(0 == diff)
-        {
+    } else {
+
+        if(0 == diff) {
+
             /* local view may override global command */
             iter->last_cmd_global = cmd2;
         }
@@ -191,8 +232,8 @@ clish_shell_param_generator(const clish_shell_t   *this,
                             const clish_command_t *cmd,
                             const char            *line,
                             unsigned               offset,
-                            unsigned               state)
-{
+                            unsigned               state) {
+
     char                *result      = NULL;
     const char          *name        = clish_command__get_name(cmd);
     char                *text        = lub_string_dup(&line[offset]);
@@ -257,8 +298,8 @@ static char *
 clish_shell_command_generator(clish_shell_t *this,
                               const char    *line,
                               unsigned       offset,
-                              unsigned       state)
-{
+                              unsigned       state) {
+
     char                  *result = NULL;
     const clish_command_t *cmd    = NULL;
     if(0 == state)
@@ -283,8 +324,8 @@ char *
 clish_shell_word_generator(clish_shell_t *this,
                            const char    *line,
                            unsigned       offset,
-                           unsigned       state)
-{
+                           unsigned       state) {
+
     char                  *result     = NULL;
     const clish_command_t *cmd, *next = NULL;
 
@@ -342,8 +383,8 @@ static clish_shell_builtin_fn_t
     clish_source_nostop,
     clish_history;
 
-static clish_shell_builtin_t clish_cmd_list[] =
-{
+static clish_shell_builtin_t clish_cmd_list[] = {
+
     {"clish_close",         clish_close},
     {"clish_overview",      clish_overview},
     {"clish_source",        clish_source},
@@ -357,8 +398,8 @@ static clish_shell_builtin_t clish_cmd_list[] =
 */
 static bool_t
 clish_close(const clish_shell_t *shell,
-            const lub_argv_t    *argv)
-{
+            const lub_argv_t    *argv) {
+
     /* the exception proves the rule... */
     clish_shell_t *this = (clish_shell_t *)shell;
     
@@ -376,8 +417,8 @@ clish_close(const clish_shell_t *shell,
 static bool_t
 clish_source_internal(const clish_shell_t *shell,
 		      const lub_argv_t    *argv,
-                      bool_t              stop_on_error)
-{
+                      bool_t              stop_on_error) {
+
     bool_t      result = BOOL_FALSE;
     const char *filename = lub_argv__get_arg(argv,0);
     struct  stat   fileStat;
@@ -421,8 +462,8 @@ clish_source_internal(const clish_shell_t *shell,
 */
 static bool_t
 clish_source(const clish_shell_t *shell,
-             const lub_argv_t    *argv)
-{
+             const lub_argv_t    *argv) {
+
     return(clish_source_internal(shell, argv, BOOL_TRUE));
 }
 
@@ -433,8 +474,8 @@ clish_source(const clish_shell_t *shell,
 */
 static bool_t
 clish_source_nostop(const clish_shell_t *shell,
-             const lub_argv_t    *argv)
-{
+             const lub_argv_t    *argv) {
+
     return(clish_source_internal(shell, argv, BOOL_FALSE));
 }
 
@@ -443,8 +484,8 @@ clish_source_nostop(const clish_shell_t *shell,
 */
 static bool_t
 clish_overview(const clish_shell_t *this,
-               const lub_argv_t    *argv)
-{
+               const lub_argv_t    *argv) {
+
     argv = argv; /* not used */
     
     tinyrl_printf(this->tinyrl,"%s\n",this->overview);
@@ -454,8 +495,8 @@ clish_overview(const clish_shell_t *this,
 
 static bool_t
 clish_history(const clish_shell_t *this,
-              const lub_argv_t    *argv)
-{
+              const lub_argv_t    *argv) {
+
     tinyrl_history_t             *history=tinyrl__get_history(this->tinyrl);
     tinyrl_history_iterator_t     iter;
     const tinyrl_history_entry_t *entry;
@@ -495,8 +536,8 @@ clish_history(const clish_shell_t *this,
  */
 static clish_shell_builtin_fn_t *
 find_builtin_callback(const clish_shell_builtin_t *cmd_list,
-                      const char                  *name)
-{
+                      const char                  *name) {
+
     const clish_shell_builtin_t *result;
     
     /* search a list of commands */
@@ -513,8 +554,8 @@ find_builtin_callback(const clish_shell_builtin_t *cmd_list,
 }
 
 void
-clish_shell_cleanup_script(void *script)
-{
+clish_shell_cleanup_script(void *script) {
+
     /* simply release the memory */
     lub_string_free(script);
 }
@@ -522,8 +563,8 @@ clish_shell_cleanup_script(void *script)
 bool_t
 clish_shell_execute(clish_shell_t         *this,
                     const clish_command_t *cmd,
-                    clish_pargv_t        **pargv)
-{
+                    clish_pargv_t        **pargv) {
+
     bool_t      result = BOOL_TRUE;
     const char *builtin;
     char       *script;
@@ -604,8 +645,8 @@ clish_shell_find_create_ptype(clish_shell_t           *this,
                               const char              *text,
                               const char              *pattern,
                               clish_ptype_method_e     method,
-                              clish_ptype_preprocess_e preprocess)
-{
+                              clish_ptype_preprocess_e preprocess) {
+
     clish_ptype_t *ptype = lub_bintree_find(&this->ptype_tree,name);
 
     if(NULL == ptype) 
@@ -643,8 +684,8 @@ clish_shell_find_create_ptype(clish_shell_t           *this,
 clish_view_t *
 clish_shell_find_create_view(clish_shell_t *this,
                              const char    *name,
-                             const char    *prompt)
-{
+                             const char    *prompt) {
+
 	clish_view_t *view = lub_bintree_find(&this->view_tree,name);
 
 	if(NULL == view) 
@@ -673,8 +714,8 @@ clish_shell_find_create_view(clish_shell_t *this,
 
 clish_view_t *
 clish_shell_find_view(clish_shell_t *this,
-                      const char    *name)
-{
+                      const char    *name) {
+
 	return lub_bintree_find(&this->view_tree,name);
 }  
 
@@ -686,8 +727,8 @@ clish_shell_find_view(clish_shell_t *this,
 
 const clish_command_t *
 clish_shell_getfirst_command(clish_shell_t *this,
-                             const char    *line)
-{
+                             const char    *line) {
+
     clish_shell_iterator_init(&this->iter);
     
     /* find the first command for which this is a prefix */
@@ -702,8 +743,8 @@ clish_shell_getfirst_command(clish_shell_t *this,
 
 const clish_command_t *
 clish_shell_getnext_command(clish_shell_t *this,
-                            const char    *line)
-{
+                            const char    *line) {
+
     return clish_shell_find_next_completion(this,line,&this->iter);
 }
 
@@ -723,8 +764,8 @@ clish_shell_getnext_command(clish_shell_t *this,
 static void
 available_commands(clish_shell_t         *this,
                    const char            *line,
-                   bool_t                 full)
-{
+                   bool_t                 full) {
+
     char                  *buf = NULL;
     size_t                 max_width = 0;
     const clish_command_t *cmd;
@@ -808,8 +849,8 @@ available_commands(clish_shell_t         *this,
 
 void
 clish_shell_help(clish_shell_t *this,
-                 const char    *line)
-{
+                 const char    *line) {
+
     const clish_command_t *cmd,*next_cmd, *first_cmd;
     
     /* if there are further commands then we need to show them too */
@@ -886,8 +927,8 @@ clish_shell_help(clish_shell_t *this,
 
 void
 clish_shell_insert_ptype(clish_shell_t *this,
-                         clish_ptype_t *ptype)
-{
+                         clish_ptype_t *ptype) {
+
     (void)lub_bintree_insert(&this->ptype_tree,ptype);
 }  
 
@@ -899,8 +940,8 @@ clish_shell_insert_ptype(clish_shell_t *this,
 
 void
 clish_shell_insert_view(clish_shell_t *this,
-                        clish_view_t  *view)
-{
+                        clish_view_t  *view) {
+
     (void)lub_bintree_insert(&this->view_tree,view);
 }  
 
@@ -916,8 +957,8 @@ static void
 clish_shell_init(clish_shell_t             *this,
                  const clish_shell_hooks_t *hooks,
                  void                      *cookie,
-                 FILE                      *istream)
-{
+                 FILE                      *istream) {
+
     /* initialise the tree of views */
     lub_bintree_init(&this->view_tree,
                     clish_view_bt_offset(),
@@ -951,8 +992,8 @@ clish_shell_init(clish_shell_t             *this,
 clish_shell_t *
 clish_shell_new(const clish_shell_hooks_t *hooks,
                 void                      *cookie,
-                FILE                      *istream)
-{
+                FILE                      *istream) {
+
     clish_shell_t *this = malloc(sizeof(clish_shell_t));
 
     if(this)
@@ -983,8 +1024,8 @@ clish_pargv_status_t
 clish_shell_parse(const clish_shell_t    *this,
                   const char             *line,
                   const clish_command_t **cmd,
-                  clish_pargv_t         **pargv)
-{
+                  clish_pargv_t         **pargv) {
+
     clish_pargv_status_t result = clish_BAD_CMD;
     size_t             offset;
     char              *prompt = clish_view__get_prompt(this->view,this->viewid);
@@ -1012,8 +1053,8 @@ clish_shell_parse(const clish_shell_t    *this,
  "private.h"
 
 bool_t
-clish_shell_pop_file(clish_shell_t *this)
-{
+clish_shell_pop_file(clish_shell_t *this) {
+
     bool_t              result = BOOL_FALSE;
     clish_shell_file_t *node   = this->current_file;
     
@@ -1045,8 +1086,8 @@ clish_shell_pop_file(clish_shell_t *this)
 bool_t 
 clish_shell_push_file(clish_shell_t *this,
                       FILE          *file,
-                      bool_t        stop_on_error)
-{
+                      bool_t        stop_on_error) {
+
     /* allocate a control node */
     clish_shell_file_t *node   = malloc(sizeof(clish_shell_file_t));
     bool_t              result = BOOL_TRUE;
@@ -1077,8 +1118,8 @@ clish_shell_push_file(clish_shell_t *this,
 
 const clish_command_t *
 clish_shell_resolve_command(const clish_shell_t *this,
-                            const char          *line)
-{
+                            const char          *line) {
+
 	clish_command_t *cmd1,*cmd2;
 	
 	/* search the current view and global view */
@@ -1097,8 +1138,8 @@ clish_shell_resolve_command(const clish_shell_t *this,
 
 const clish_command_t *
 clish_shell_resolve_prefix(const clish_shell_t *this,
-                           const char          *line)
-{
+                           const char          *line) {
+
 	clish_command_t *cmd1,*cmd2;
 	
 	/* search the current view and global view */
@@ -1118,8 +1159,8 @@ clish_shell_resolve_prefix(const clish_shell_t *this,
 
 void
 clish_shell_set_context(clish_shell_t *this,
-                        const char    *viewname)
-{
+                        const char    *viewname) {
+
  	this->view   = clish_shell_find_view(this,viewname);
  	assert(this->view);
  	assert(this->global);
@@ -1151,8 +1192,8 @@ const char *default_path = "/etc/clish;~/.clish";
  * a CLI session when a thread is cancelled.
  */
 typedef struct _context context_t;
-struct _context
-{
+struct _context {
+
     pthread_t                  pthread;
     const clish_shell_hooks_t *hooks;
     void                      *cookie;
@@ -1166,8 +1207,8 @@ struct _context
  * defined in HOME
  */
 static char *
-clish_shell_tilde_expand(const char *path)
-{
+clish_shell_tilde_expand(const char *path) {
+
     char       *home_dir = getenv("HOME");
     char       *result   = NULL;
     const char *p        = path;
@@ -1196,8 +1237,8 @@ clish_shell_tilde_expand(const char *path)
 }
 
 void 
-clish_shell_load_files(clish_shell_t *this)
-{
+clish_shell_load_files(clish_shell_t *this) {
+
     const char *path = getenv("CLISH_PATH");
     char       *buffer;
     char       *dirname;
@@ -1272,8 +1313,8 @@ clish_shell_load_files(clish_shell_t *this)
 
 /* This is used to hold context during tinyrl callbacks */
 typedef struct _context context_t;
-struct _context
-{
+struct _context {
+
     clish_shell_t         *shell;
     const clish_command_t *command;
     clish_pargv_t         *pargv;
@@ -1281,8 +1322,8 @@ struct _context
 
 static bool_t
 clish_shell_tinyrl_key_help(tinyrl_t *this,
-                            int       key)
-{
+                            int       key) {
+
     bool_t result = BOOL_TRUE;
     if(BOOL_TRUE == tinyrl_is_quoting(this))
     {
@@ -1316,8 +1357,8 @@ static char *
 clish_shell_tinyrl_word_generator (tinyrl_t   *this,
                                    const char *line,
                                    unsigned    offset,
-                                   unsigned    state)
-{
+                                   unsigned    state) {
+
     /* get the context */
     context_t *context = tinyrl__get_context(this);
     
@@ -1332,8 +1373,8 @@ clish_shell_tinyrl_word_generator (tinyrl_t   *this,
  * Expand the current line with any history substitutions
  */
 static clish_pargv_status_t
-clish_shell_tinyrl_expand(tinyrl_t *this)
-{
+clish_shell_tinyrl_expand(tinyrl_t *this) {
+
     clish_pargv_status_t status = clish_LINE_OK;
     int                  rtn;
     char                *buffer;
@@ -1378,8 +1419,8 @@ clish_shell_tinyrl_expand(tinyrl_t *this)
  * or a unique completion is inserted.
  */
 static tinyrl_match_e
-clish_shell_tinyrl_complete(tinyrl_t *this)
-{
+clish_shell_tinyrl_complete(tinyrl_t *this) {
+
     context_t     *context = tinyrl__get_context(this);
     tinyrl_match_e status;
     
@@ -1421,8 +1462,8 @@ clish_shell_tinyrl_complete(tinyrl_t *this)
 
 static bool_t
 clish_shell_tinyrl_key_space(tinyrl_t *this,
-                             int       key)
-{
+                             int       key) {
+
     bool_t         result  = BOOL_FALSE;
     tinyrl_match_e status;
     
@@ -1474,8 +1515,8 @@ clish_shell_tinyrl_key_space(tinyrl_t *this,
 
 static bool_t
 clish_shell_tinyrl_key_enter(tinyrl_t *this,
-                             int       key)
-{
+                             int       key) {
+
     context_t             *context = tinyrl__get_context(this);
     const clish_command_t *cmd = NULL;
     const char            *line = tinyrl__get_line(this);
@@ -1566,8 +1607,8 @@ static char **
 clish_shell_tinyrl_completion(tinyrl_t   *this,
                               const char *line,
                               unsigned    start,
-                              unsigned    end)
-{
+                              unsigned    end) {
+
     char **matches;
     
     /* don't bother to resort to filename completion */
@@ -1583,8 +1624,8 @@ clish_shell_tinyrl_completion(tinyrl_t   *this,
 }
 
 static void
-clish_shell_tinyrl_init(tinyrl_t *this)
-{   
+clish_shell_tinyrl_init(tinyrl_t *this) {
+   
     bool_t status;    
     /* bind the '?' key to the help function */
     status = tinyrl_bind_key(this,'?', clish_shell_tinyrl_key_help);
@@ -1607,8 +1648,8 @@ clish_shell_tinyrl_init(tinyrl_t *this)
 tinyrl_t *
 clish_shell_tinyrl_new(FILE    *istream,
                        FILE    *ostream,
-                       unsigned stifle)
-{
+                       unsigned stifle) {
+
     /* call the parent constructor */
     tinyrl_t *this = tinyrl_new(istream,
                                 ostream,
@@ -1623,15 +1664,15 @@ clish_shell_tinyrl_new(FILE    *istream,
 }
 
 void
-clish_shell_tinyrl_fini(tinyrl_t *this)
-{
+clish_shell_tinyrl_fini(tinyrl_t *this) {
+
     /* nothing to do... yet */
     this=this;
 }
 
 void
-clish_shell_tinyrl_delete(tinyrl_t *this)
-{
+clish_shell_tinyrl_delete(tinyrl_t *this) {
+
     /* call our destructor */
     clish_shell_tinyrl_fini(this);
     
@@ -1644,8 +1685,8 @@ bool_t
 clish_shell_readline(clish_shell_t          *this,
                      const char             *prompt,
                      const clish_command_t **cmd,
-                     clish_pargv_t         **pargv)
-{
+                     clish_pargv_t         **pargv) {
+
     char         *line   = NULL;
     bool_t        result = BOOL_FALSE;
     context_t     context;
@@ -1687,8 +1728,8 @@ clish_shell_readline(clish_shell_t          *this,
 
 /* This provides the thread of execution for a shell instance */
 static void *
-clish_shell_thread(void *arg)
-{
+clish_shell_thread(void *arg) {
+
     context_t     *context = arg;
     bool_t         running = BOOL_TRUE;
     clish_shell_t *this;
@@ -1798,8 +1839,8 @@ static context_t *
 _clish_shell_spawn(const pthread_attr_t      *attr,
                    const clish_shell_hooks_t *hooks,
                    void                      *cookie,
-                   FILE                      *istream)
-{
+                   FILE                      *istream) {
+
     int rtn;
     context_t *context = malloc(sizeof(context_t));
     assert(context);
@@ -1830,8 +1871,8 @@ _clish_shell_spawn(const pthread_attr_t      *attr,
 static int
 _clish_shell_spawn_and_wait(const clish_shell_hooks_t *hooks,
                             void                      *cookie,
-                            FILE                      *file)
-{
+                            FILE                      *file) {
+
     void      *result = NULL;
     context_t *context = _clish_shell_spawn(NULL,hooks,cookie,file);
     
@@ -1845,8 +1886,8 @@ _clish_shell_spawn_and_wait(const clish_shell_hooks_t *hooks,
 
 int 
 clish_shell_spawn_and_wait(const clish_shell_hooks_t *hooks,
-                           void                      *cookie)
-{
+                           void                      *cookie) {
+
     return _clish_shell_spawn_and_wait(hooks,cookie,stdin);
 }
 
@@ -1854,8 +1895,8 @@ bool_t
 clish_shell_spawn(pthread_t                 *pthread,
                   const pthread_attr_t      *attr,
                   const clish_shell_hooks_t *hooks,
-                  void                      *cookie)
-{
+                  void                      *cookie) {
+
     context_t *context;
     bool_t     result = BOOL_FALSE;
     
@@ -1876,8 +1917,8 @@ clish_shell_spawn(pthread_t                 *pthread,
 bool_t
 clish_shell_spawn_from_file(const clish_shell_hooks_t *hooks,
                             void                      *cookie,
-                            const char                *filename)
-{
+                            const char                *filename) {
+
     bool_t result = BOOL_FALSE;
     if(NULL != filename)
     {
@@ -1901,8 +1942,8 @@ clish_shell_spawn_from_file(const clish_shell_hooks_t *hooks,
 
 
 bool_t
-clish_shell_startup(clish_shell_t *this)
-{
+clish_shell_startup(clish_shell_t *this) {
+
     const char    *banner;
     clish_pargv_t *dummy = NULL;
     
@@ -1922,8 +1963,8 @@ clish_shell_startup(clish_shell_t *this)
 
 /* This is invoked when the thread ends or is cancelled. */
 static void
-clish_shell_cleanup(context_t *context)
-{
+clish_shell_cleanup(context_t *context) {
+
 #ifdef __vxworks
     int last_state;
     /* we need to avoid recursion issues that exit in VxWorks */
@@ -1958,8 +1999,8 @@ clish_shell_cleanup(context_t *context)
 
 
 static void
-clish_shell_fini(clish_shell_t *this)
-{
+clish_shell_fini(clish_shell_t *this) {
+
 	clish_view_t  *view;
 	clish_ptype_t *ptype;
 	
@@ -2004,8 +2045,8 @@ clish_shell_fini(clish_shell_t *this)
 }
 
 void
-clish_shell_delete(clish_shell_t *this)
-{
+clish_shell_delete(clish_shell_t *this) {
+
     if(this->client_hooks->fini_fn)
     {
         /* now call the client finalisation */
@@ -2022,8 +2063,8 @@ clish_shell_delete(clish_shell_t *this)
 /** DEBUGGING *****************************************************************/
 
 void
-clish_shell_dump(clish_shell_t *this)
-{
+clish_shell_dump(clish_shell_t *this) {
+
     clish_view_t             *v;
     clish_ptype_t            *t;	
     lub_bintree_iterator_t   iter;

@@ -305,7 +305,7 @@ realloc(void   *old_ptr,
 }
 /*-------------------------------------------------------- */
 void *
-valloc(unsigned size)
+valloc(size_t size)
 {
     return memalign(VX_PAGE_SIZE,size);
 }

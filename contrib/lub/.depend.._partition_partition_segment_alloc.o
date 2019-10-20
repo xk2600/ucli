@@ -1,0 +1,7 @@
+./partition/partition_segment_alloc.o: \
+  partition/partition_segment_alloc.c partition/private.h ../lub/types.h \
+  ../lub/partition.h /usr/include/stddef.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_null.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/x86/_types.h \
+  /usr/include/machine/_limits.h /usr/include/x86/_limits.h \
+  ../lub/c_decl.h ../lub/heap.h

@@ -9,18 +9,14 @@ _BEGIN_C_DECL
 struct Tcl_Interp;
 
 typedef struct tclish_cookie_s tclish_cookie_t;
-struct tclish_cookie_s
-{
+struct tclish_cookie_s {
     struct Tcl_Interp   *interp;
 };
 
 /* utility functions */
-extern void
-    clish_startup(int argc, const char **argv);
-extern void
-    clish_shutdown(void);
-extern void
-    tclish_show_result(struct Tcl_Interp *interp);
+extern void clish_startup(int argc, const char **argv);
+extern void clish_shutdown(void);
+extern void tclish_show_result(struct Tcl_Interp *interp);
 
 /* storage */
 extern struct termios clish_default_tty_termios;

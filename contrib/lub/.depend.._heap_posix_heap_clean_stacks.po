@@ -1,0 +1,1 @@
+./heap/posix/heap_clean_stacks.po: heap/posix/heap_clean_stacks.c
