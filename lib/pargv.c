@@ -1,7 +1,6 @@
 /*
  * paramv.c
  */
-#include "private.h"
 
 #include "lib/pargv.h"
 #include "lib/param.h"

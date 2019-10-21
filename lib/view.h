@@ -43,6 +43,8 @@ typedef struct clish_view_s clish_view_t;
  * ATTRIBUTES
  *
  *       clish_view__get_name -     gets the name of the view
+ *       clish_view__set_prompt -
+ *       clish_view__get_prompt -
 
  * 
  * ARGUMENTS

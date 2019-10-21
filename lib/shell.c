@@ -12,8 +12,6 @@
 #include "tinyrl/history.h"
 #include "tinyrl/tinyrl.h"
 
-#include "tinyxml/tinyxml.h"
-
 #include <assert.h>
 #include <dirent.h>
 #include <pthread.h>
@@ -25,7 +23,15 @@
 
 
 
+
+
+/******************************************************************************/
 /** PRIVATE TYPES *************************************************************/
+
+/*
+ * if CLISH_PATH is unset in the environment then this is the value used. 
+ */
+const char *default_path = "/etc/clish;~/.clish";
 
 typedef enum {
  SHELL_STATE_INITIALISING,
@@ -37,33 +43,72 @@ typedef enum {
 
 /* iterate around commands */
 typedef struct {
- const clish_command_t     *last_cmd_local;
- const clish_command_t     *last_cmd_global;
+
+   const clish_command_t     *last_cmd_local;
+   const clish_command_t     *last_cmd_global;
 } clish_shell_iterator_t;
 
 /* this is used to maintain a stack of file handles */
 typedef struct clish_shell_file_s clish_shell_file_t;
 struct clish_shell_file_s {
- clish_shell_file_t        *next;
- FILE                      *file;
- bool_t                     stop_on_error;  /* stop on error for file input */
+
+   clish_shell_file_t        *next;
+   FILE                      *file;
+   bool_t                     stop_on_error;  /* stop on error for file input */
 };
 
 struct clish_shell_s {
- lub_bintree_t              view_tree;      /* Maintain a tree of views */
- lub_bintree_t              ptype_tree;     /* Maintain a tree of ptypes */
- const clish_shell_hooks_t *client_hooks;   /* Client callback hooks */
- void                      *client_cookie;  /* Client callback cookie */
- clish_view_t              *global;         /* Reference to the global view. */
- clish_view_t              *view;           /* Reference to the current view.*/
- clish_command_t           *startup;        /* This is the startup command */
- clish_shell_iterator_t     iter;           /* used for iterating commands */
- shell_state_t              state;          /* The current state */
- char                      *overview;       /* Overview text for this shell. */
- char                      *viewid;         /* The current view ID string */
- tinyrl_t                  *tinyrl;         /* Tiny readline instance */
- clish_shell_file_t        *current_file;   /* file currently in use for input */
+
+   lub_bintree_t              view_tree;      /* Maintain a tree of views */
+   lub_bintree_t              ptype_tree;     /* Maintain a tree of ptypes */
+   const clish_shell_hooks_t *client_hooks;   /* Client callback hooks */
+   void                      *client_cookie;  /* Client callback cookie */
+   clish_view_t              *global;         /* Reference to the global view. */
+   clish_view_t              *view;           /* Reference to the current view.*/
+   clish_command_t           *startup;        /* This is the startup command */
+   clish_shell_iterator_t     iter;           /* used for iterating commands */
+   shell_state_t              state;          /* The current state */
+   char                      *overview;       /* Overview text for this shell. */
+   char                      *viewid;         /* The current view ID string */
+   tinyrl_t                  *tinyrl;         /* Tiny readline instance */
+   clish_shell_file_t        *current_file;   /* file currently in use for input */
 };
+
+
+/* 
+ * The context structure is used to simplify the cleanup of a CLI session when a 
+ * thread is cancelled.
+ */
+typedef struct _context context_t;
+struct _context {
+
+    pthread_t                  pthread;
+    const clish_shell_hooks_t *hooks;
+    void                      *cookie;
+    FILE                      *istream;
+    clish_shell_t             *shell;
+    const clish_command_t     *command;
+    clish_pargv_t             *pargv;
+    char                      *prompt;
+};
+
+/* This is used to hold context during tinyrl callbacks... changed to reuse 
+ * _context defined above */
+
+/* typedef struct _context context_t;
+   struct _context {
+  
+      clish_shell_t         *shell;
+      const clish_command_t *command;
+      clish_pargv_t         *pargv;
+   }; */
+
+
+
+
+
+/******************************************************************************/
+/** PRIVATE LOCAL DECLARATIONS ************************************************/
 
 /* Initialise a command iterator structure */
 void clish_shell_iterator_init(clish_shell_iterator_t *iter);
@@ -81,7 +126,7 @@ const clish_command_t *     clish_shell_find_next_completion(
  * Returns
  *
  *      BOOL_TRUE - the file was successfully associated with the shell.
- *      BOOL_FALSE - there was insufficient resource to associate this file.  */
+ *      BOOL_FALSE - there was insufficient resource to associate this file. */
 bool_t                      clish_shell_push_file(
                               clish_shell_t          *instance, 
                               FILE                   *file, 
@@ -150,7 +195,15 @@ void                        clish_shell_tinyrl_delete(
                               tinyrl_t               *instance);
 
 
+static void                 clish_shell_cleanup(
+                              context_t              *context);
 
+
+
+
+
+
+/******************************************************************************/
 /** PUBLIC ATTRIBUTES *********************************************************/
 
 /* shell__get_client_cookie.c */
@@ -181,10 +234,16 @@ clish_shell__get_viewid(const clish_shell_t *this) {
 }
 
 
-/** PRIVATE FUNCTIONS ********************************************************/
+
+
+
+
+
+
+/******************************************************************************/
+/** PRIVATE LOCAL FUNCTIONS ***************************************************/
 
 /** word_generator **/
-
 void
 clish_shell_iterator_init(clish_shell_iterator_t *iter) {
 
@@ -360,15 +419,7 @@ clish_shell_word_generator(clish_shell_t *this,
 /*
  * shell_execute.c
  */
- "private.h"
- "lub/string.h"
- "lub/argv.h"
 
- <assert.h>
- <stdio.h>
- <string.h>
- <stdlib.h>
- <sys/stat.h>
 
 /*
  * These are the internal commands for this framework.
@@ -632,9 +683,7 @@ clish_shell_execute(clish_shell_t         *this,
 /*
  * shell_find_create_ptype.c
  */
- "private.h"
 
- <assert.h>
 
 clish_ptype_t *
 clish_shell_find_create_ptype(clish_shell_t           *this,
@@ -674,9 +723,7 @@ clish_shell_find_create_ptype(clish_shell_t           *this,
 /*
  * shell_find_create_view.c
  */
- "private.h"
 
- <assert.h>
 
 clish_view_t *
 clish_shell_find_create_view(clish_shell_t *this,
@@ -706,7 +753,6 @@ clish_shell_find_create_view(clish_shell_t *this,
 /*
  * shell_find_view.c
  */
- "private.h"
 
 
 clish_view_t *
@@ -719,7 +765,6 @@ clish_shell_find_view(clish_shell_t *this,
 /*
  * shell_getfirst_command.c
  */
- "private.h"
 
 
 const clish_command_t *
@@ -735,7 +780,6 @@ clish_shell_getfirst_command(clish_shell_t *this,
 /*
  * shell_getnext_command.c
  */
- "private.h"
 
 
 const clish_command_t *
@@ -748,11 +792,11 @@ clish_shell_getnext_command(clish_shell_t *this,
 /*
  * shell_help.c
  */
- "private.h"
- "lub/string.h"
 
- <stdio.h>
- <string.h>
+
+
+
+
 
 
 /*
@@ -919,9 +963,6 @@ clish_shell_help(clish_shell_t *this,
 /*
  * shell_insert_view.c
  */
- "private.h"
-
-
 void
 clish_shell_insert_ptype(clish_shell_t *this,
                          clish_ptype_t *ptype) {
@@ -932,9 +973,6 @@ clish_shell_insert_ptype(clish_shell_t *this,
 /*
  * shell_insert_view.c
  */
- "private.h"
-
-
 void
 clish_shell_insert_view(clish_shell_t *this,
                         clish_view_t  *view) {
@@ -945,11 +983,6 @@ clish_shell_insert_view(clish_shell_t *this,
 /*
  * shell_new.c
  */
- "private.h"
-
- <assert.h>
- <stdlib.h>
-
 static void
 clish_shell_init(clish_shell_t             *this,
                  const clish_shell_hooks_t *hooks,
@@ -1012,11 +1045,6 @@ clish_shell_new(const clish_shell_hooks_t *hooks,
 /*
  * shell_parse.c
  */
- "private.h"
- "lub/string.h"
-
- <string.h>
-
 clish_pargv_status_t
 clish_shell_parse(const clish_shell_t    *this,
                   const char             *line,
@@ -1043,11 +1071,6 @@ clish_shell_parse(const clish_shell_t    *this,
     }
     return result;
 }
-
- <stdlib.h>
- <stdio.h>
-
- "private.h"
 
 bool_t
 clish_shell_pop_file(clish_shell_t *this) {
@@ -1076,9 +1099,6 @@ clish_shell_pop_file(clish_shell_t *this) {
     }
     return result;
 }
- <stdlib.h>
-
- "private.h"
 
 bool_t 
 clish_shell_push_file(clish_shell_t *this,
@@ -1110,7 +1130,6 @@ clish_shell_push_file(clish_shell_t *this,
 /*
  * shell_resolve_command.c
  */
- "private.h"
 
 
 const clish_command_t *
@@ -1130,7 +1149,6 @@ clish_shell_resolve_command(const clish_shell_t *this,
 /*
  * shell_resolve_prefix.c
  */
- "private.h"
 
 
 const clish_command_t *
@@ -1150,9 +1168,6 @@ clish_shell_resolve_prefix(const clish_shell_t *this,
 /*
  * shell_set_context.c
  */
- "private.h"
-
- <assert.h>
 
 void
 clish_shell_set_context(clish_shell_t *this,
@@ -1166,39 +1181,9 @@ clish_shell_set_context(clish_shell_t *this,
 /*
  * shell_new.c
  */
- "private.h"
- "lub/string.h"
-
- <stdio.h>
- <stdlib.h>
- <string.h>
- <assert.h>
-
- <unistd.h>
- <pthread.h>
- <dirent.h>
-
-/*
- * if CLISH_PATH is unset in the environment then this is the value used. 
- */
-const char *default_path = "/etc/clish;~/.clish";
 
 
-/* 
- * The context structure is used to simplify the cleanup of 
- * a CLI session when a thread is cancelled.
- */
-typedef struct _context context_t;
-struct _context {
 
-    pthread_t                  pthread;
-    const clish_shell_hooks_t *hooks;
-    void                      *cookie;
-    FILE                      *istream;
-    clish_shell_t             *shell;
-    clish_pargv_t             *pargv;
-    char                      *prompt;
-};
 
 /* perform a simple tilde substitution for the home directory
  * defined in HOME
@@ -1283,7 +1268,8 @@ clish_shell_load_files(clish_shell_t *this) {
                     lub_string_cat(&filename,entry->d_name);
                     
                     /* load this file */
-                    (void)clish_shell_xml_read(this,filename);
+                    /* TODO: REPLACE THIS WITH TCL SHELL AND SOURCE */
+                    //(void)clish_shell_xml_read(this,filename);
                     
                     /* release the resource */
                     lub_string_free(filename);
@@ -1308,14 +1294,6 @@ clish_shell_load_files(clish_shell_t *this) {
 /* This is a specialisation of the tinyrl_t class which maps the readline
  * functionality to the CLISH envrionment. */
 
-/* This is used to hold context during tinyrl callbacks */
-typedef struct _context context_t;
-struct _context {
-
-    clish_shell_t         *shell;
-    const clish_command_t *command;
-    clish_pargv_t         *pargv;
-};
 
 static bool_t
 clish_shell_tinyrl_key_help(tinyrl_t *this,
@@ -1934,8 +1912,7 @@ clish_shell_spawn_from_file(const clish_shell_hooks_t *hooks,
 /*
  * shell_startup.c
  */
- "private.h"
- <assert.h>
+
 
 
 bool_t

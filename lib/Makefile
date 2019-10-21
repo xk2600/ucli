@@ -9,7 +9,7 @@ PKGVER=		$(SHLIB_MAJOR).$(SHLIB_MINOR).$(SHLIB_TINY)
 
 CFLAGS=         -O -I../ -I../contrib/ -DPACKAGE_VERSION="\"$(PKGVER)\""
 
-TINYXML=	tinyxml_read.cpp
+# TINYXML=	tinyxml_read.cpp
 UCLI!=		ls *.c
 
 SRCS =	$(UCLI)
