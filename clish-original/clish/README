@@ -1,0 +1,15 @@
+/**
+\defgroup libucli "The Unified CLI Library" \
+ -- a fork of clish "CLI Shell" Library
+@{
+
+This library provides the core functionality for a command shell for simple
+interaction with an appliance or operating system. Originating from the
+interface pioneered by CISCO in the 90s, and reinvented as the modular XML
+configurable UI named clish.
+
+For historical reference to clish see:
+http://clish.sourceforge.net/
+
+@}
+*/

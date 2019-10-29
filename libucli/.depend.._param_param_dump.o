@@ -1,0 +1,8 @@
+./param/param_dump.o: param/param_dump.c param/private.h param/../param.h \
+  param/../ptype.h ../contrib/lub/types.h ../contrib/lub/bintree.h \
+  /usr/include/stddef.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_null.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/x86/_types.h \
+  /usr/include/machine/_limits.h /usr/include/x86/_limits.h \
+  ../contrib/lub/dump.h /usr/include/stdarg.h /usr/include/x86/stdarg.h \
+  /usr/include/sys/_stdarg.h

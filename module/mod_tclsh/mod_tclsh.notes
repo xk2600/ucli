@@ -1,0 +1,148 @@
+/* Allow TCL to manipulate ucli.
+ *
+ * Syntax:
+ *   
+ *   set method [list regexp integer select]
+ *   set preprocess [list none toupper tolower]
+ *
+ *   ... action {script}
+ *   ... action {builtinFunctionName} ... {args}
+ *
+ *
+ *
+ *   ucli ptype create {name} {help} {pattern} {method regexp} {preprocess none}
+ *   ucli ptype {
+ *     name     {name of the paramter-type}
+ *     help     {paramter-type inline help text}
+ *     pattern  {
+ *       validation pattern for the type, where syntax is as follows:
+ *       
+ *         regexp:    any regular expression.
+ *         integer:   min..max   as in... -5..5, for a range of ten starting at
+ *                    negative five.
+ *         select:    list of possible values, as in
+ *                      "valueOne(ONE) valueTwo(TWO) valueThree(THREE)",
+ *                    where: 'valueOne' would be what the user must enter
+ *                           to store "ONE" in this parameter.
+ *     }
+ *     method   ...
+ *     preproocess ...
+ *   }
+ * 
+ *   ucli command create {name} {help} {view {}} {viewid {}} {access {}} {escapechars {}}
+ *   ucli command {
+ *
+ *     name     {name of the command}
+ *     help     {command inline help text}
+ *     view     {view to switch to on successuful execution of 'action'}
+ *     viewid   {view id to transition to if new view occurs}
+ *     access   {user group/level to which execution of this command is restrcted}
+ *
+ *     args     {
+ *       paramter to capture the rest of the line after the formal parameters. 
+ *       similar to var_args, ... in c, or args usage in TCL.
+ *     }
+ *     argshelp {
+ *       help which describes the purpose of the "args" attribute. must exist
+ *       if the args parameter is used.
+ *     }
+ *
+ *     escape_chars {
+ *       characters which will be escaped (ex: \$) before being expanded as
+ *       a variable. default: `|$<>&()# --> \`\|\$\<\>\&\(\)\#
+ *     }
+ *     
+ *     detail   {detailed help text for this command}
+ *
+ *     param    {name} {help} {ptype} {prefix {}} {default {}}
+ *     param    {
+ *       name     {a textual name for this parameter}
+ *       help     {parameter inline help text}
+ *       ptype    {
+ *         reference to a parameter-type name. special value of "" indicates flag
+ *       }
+ *       prefix   {defines the prefix for an optional parameter}
+ *       default  {defines a default value for a parameter}
+ *     }
+ *
+ *     action ...
+ *   }
+ *
+ *
+ *   ucli command {name} rename {newname}
+ *   ucli command {name} help {inline help}
+ *   ucli command {name} view {view}
+ *   ucli command {name} viewid {viewid}
+ *   ucli command {name} args {args}
+ *   ucli command {name} argshelp {args help text}
+ *   ucli command {name} escape_chars {escape characters}
+ *   ucli command {name} detail {detailed text}
+ *     ...sets the preceding command attributes
+ *
+ *   ucli command {name} param {paramname} create {
+ *     name     {a textual name for this parameter}
+ *     help     {parameter inline help text}
+ *     ptype    {
+ *       reference to a parameter-type name. special value of "" indicates flag
+ *     }
+ *     prefix   {defines the prefix for an optional parameter}
+ *     default  {defines a default value for a parameter}
+ *   }
+ *   ucli command {name} param {paramname} rename {newparamname}
+ *   ucli command {name} param {paramname} help {inline help}
+ *   ucli command {name} param {paramname} ptype {parameter-type}
+ *   ucli command {name} param {paramname} prefix {prefix argument}
+ *   ucli command {name} param {paramname} default {default value}
+ *     ...sets the preceding command-param attributes
+ *
+ *   ucli command {name}
+ *     ...returns dump of entire command attributes
+ *
+ *   ucli command {name} param {paramname}
+ *     ...returns dump of parameter command attributes
+ *
+ *   ucli command {name} action 
+ *     ...dumps action configuration or args for builtin
+ *
+ *   ucli command {name} action builtin 
+ *     ...returns builtin function name
+ *
+ *   ucli command {name} action builtin {builtinFunctionName {}} {script}
+ *     ...sets builtin function name and script
+ * 
+ *
+ *   ucli view create {name} {prompt} ?command ... command?
+ *   ucli view {
+ *     name {}
+ *     prompt {}
+ *     command ...
+ *   }
+ *   ucli view {name} prompt {prompt}
+ *     ...sets prompt for view
+ *
+ *   ucli view {name} command ...
+ *     ...binds Command to view with name 'name'
+ *
+ *   viewInstance command {...}
+ *
+ *   ucli overview                  ;# returns the overview
+ *   ucli overview {overviewString} ;# stores overvewString in the overview
+ *
+ *   ucli startup {view global} {viewid {}} {detail loginBanner} {action}
+ *   ucli startup {
+ *     view
+ *     viewid
+ *     detail
+ *     action
+ *   }
+ *   
+ *   ucli {
+ *     overview ...
+ *     startup ...
+ *     ptype ...
+ *     command ...
+ *     view ...
+ *   }
+ *
+ */
+

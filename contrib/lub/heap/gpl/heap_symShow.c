@@ -90,7 +90,7 @@ lub_heap_init(const char *file_name)
 /** REQUIRES GPL LICENSING FOR LIBBFD ***********************/
 
 /*
-   This file is part of the CLISH project http://clish.sourceforge.net/
+   This file is part of the CLISH project http://ucli.sourceforge.net/
 
    The code in this file is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

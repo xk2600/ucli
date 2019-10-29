@@ -1,0 +1,20 @@
+ucli.o: ucli.c /usr/include/assert.h /usr/include/sys/cdefs.h \
+  /usr/include/stdlib.h /usr/include/sys/_null.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/x86/_types.h /usr/include/machine/_limits.h \
+  /usr/include/x86/_limits.h /usr/include/unistd.h \
+  /usr/include/sys/types.h /usr/include/machine/endian.h \
+  /usr/include/x86/endian.h /usr/include/sys/_pthreadtypes.h \
+  /usr/include/sys/_stdint.h /usr/include/sys/select.h \
+  /usr/include/sys/_sigset.h /usr/include/sys/_timeval.h \
+  /usr/include/sys/timespec.h /usr/include/sys/_timespec.h \
+  /usr/include/sys/unistd.h /usr/local/include/tcl8.6/tcl.h \
+  /usr/include/stdio.h /usr/include/stdarg.h /usr/include/x86/stdarg.h \
+  /usr/include/sys/_stdarg.h /usr/local/include/tcl8.6/tclDecls.h \
+  /usr/local/include/tcl8.6/tclPlatDecls.h libucli/private.h \
+  contrib/lub/c_decl.h libucli/shell.h /usr/include/pthread.h \
+  /usr/include/sched.h /usr/include/time.h /usr/include/xlocale/_time.h \
+  contrib/lub/types.h contrib/lub/argv.h /usr/include/stddef.h \
+  contrib/tinyrl/tinyrl.h contrib/tinyrl/history.h libucli/view.h \
+  libucli/command.h contrib/lub/bintree.h libucli/pargv.h \
+  libucli/ptype.h libucli/param.h

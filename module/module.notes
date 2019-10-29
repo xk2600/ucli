@@ -1,0 +1,36 @@
+/*
+ * module.h
+ */
+ 
+//#include "../lib/lub/c_decl.h"
+//#include "../lib/shell.h"
+
+
+//_BEGIN_C_DECL
+
+/* utility functions */
+
+/* storage */
+extern struct termios ucli_default_tty_termios;
+
+/* module_init interface */
+
+
+
+/* MARKDOWN MACRO */
+#ifdef MAKEDOC_MD
+# define _DOC
+# define _SECTION(LANG) (
+
+# define _
+#else
+# define _DOC if 0 {
+# define _CCODE } \
+# define _END_CCODE
+#endif
+
+#define ARGUMENTS \#\# ARGUMENTS
+#define RETURNS   \#\# RETURNS
+
+
+//_END_C_DECL

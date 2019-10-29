@@ -59,19 +59,19 @@
 /* #undef NO_MINUS_C_MINUS_O */
 
 /* Name of package */
-#define PACKAGE "clish"
+#define PACKAGE "ucli"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "gmckerrell at users dot sourceforge dot net"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "clish"
+#define PACKAGE_NAME "ucli"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "clish 0.7.3"
+#define PACKAGE_STRING "ucli 0.7.3"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "clish"
+#define PACKAGE_TARNAME "ucli"
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL ""

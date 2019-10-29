@@ -1,0 +1,14 @@
+./shell/shell_insert_view.po: shell/shell_insert_view.c shell/private.h \
+  shell/../shell.h /usr/include/stdio.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_null.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/x86/_types.h \
+  /usr/include/machine/_limits.h /usr/include/x86/_limits.h \
+  /usr/include/pthread.h /usr/include/sys/_pthreadtypes.h \
+  /usr/include/sys/_sigset.h /usr/include/sched.h \
+  /usr/include/sys/_timespec.h /usr/include/time.h \
+  /usr/include/sys/timespec.h /usr/include/xlocale/_time.h \
+  ../contrib/lub/c_decl.h ../contrib/lub/types.h ../contrib/lub/argv.h \
+  /usr/include/stddef.h ../contrib/tinyrl/tinyrl.h \
+  ../contrib/tinyrl/history.h shell/../view.h shell/../command.h \
+  ../contrib/lub/bintree.h shell/../pargv.h shell/../ptype.h \
+  shell/../param.h

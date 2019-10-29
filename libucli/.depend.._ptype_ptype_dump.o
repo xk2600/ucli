@@ -1,0 +1,15 @@
+./ptype/ptype_dump.o: ptype/ptype_dump.c ptype/private.h ptype/../pargv.h \
+  ptype/../ptype.h ../contrib/lub/types.h ../contrib/lub/bintree.h \
+  /usr/include/stddef.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_null.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/x86/_types.h \
+  /usr/include/machine/_limits.h /usr/include/x86/_limits.h \
+  ptype/../command.h ptype/../view.h ptype/../param.h \
+  ../contrib/lub/argv.h ../contrib/lub/c_decl.h /usr/include/sys/types.h \
+  /usr/include/machine/endian.h /usr/include/x86/endian.h \
+  /usr/include/sys/_pthreadtypes.h /usr/include/sys/_stdint.h \
+  /usr/include/sys/select.h /usr/include/sys/_sigset.h \
+  /usr/include/sys/_timeval.h /usr/include/sys/timespec.h \
+  /usr/include/sys/_timespec.h /usr/include/regex.h \
+  ../contrib/lub/dump.h /usr/include/stdarg.h /usr/include/x86/stdarg.h \
+  /usr/include/sys/_stdarg.h
